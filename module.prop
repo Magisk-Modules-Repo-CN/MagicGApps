@@ -3,5 +3,5 @@ name=MagicGApps
 version=2018.8.12
 versionCode=201808120
 author=VR25 @ xda-developers
-description=Installs a regular open_gapps-* zip (except aroma variant) systemlessly. When the module is disabled, Google Play Services are automatically disabled on the next boot as well. This prevents continuous, disturbing gms crashes.
+description=以systemlessly方式安装常规open_gapps-*.zip (aroma版除外)。禁用该模块后，Google Play服务也会在下次启动时自动禁用。这可以防止连续的，令人不安的gms崩溃
 minMagisk=1500
