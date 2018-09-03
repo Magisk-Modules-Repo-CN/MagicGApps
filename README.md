@@ -15,7 +15,8 @@
 
 #### 描述
 
-- 以systemlessly方式安装常规open_gapps-*.zip (aroma版除外)。禁用该模块后，Google Play服务也会在下次启动时自动禁用。这可以防止连续的，令人不安的gms崩溃
+- 以systemlessly方式安装常规open_gapps-*.zip (aroma版除外)。
+禁用该模块后，Google Play服务也会在下次启动时自动禁用，可防止不断出现的gms崩溃警告
 
 
 
