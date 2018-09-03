@@ -20,8 +20,8 @@ ui_print() {
 # not a function, but must be here
 if $bootMode; then
   ui_print " "
-  ui_print "(!) Boot mode install is not supported"
-  ui_print "- Install from recovery mode"
+  ui_print "(!) 不支持引导模式安装"
+  ui_print "- 请从恢复模式安装"
   ui_print " "
   exit 1
 fi
@@ -127,13 +127,13 @@ unmount_all() {
 exxit() {
   if [ "$1" = "0" ]; then
     ui_print "  "
-    ui_print "(i) No update found"
-    ui_print "- Run \"touch /data/r\" to reinstall"
-    ui_print "- Or \"touch /data/u\" to uninstall"
+    ui_print "(i) 没有找到更新"
+    ui_print "- 运行 \"touch /data/r\" 以重装"
+    ui_print "- 或 \"touch /data/u\" 以卸载"
     ui_print " "
   else
     ui_print "  "
-    ui_print "(!) No compatible open-gapps-* zip found"
+    ui_print "(!) 找不到兼容的 open-gapps-* zip"
     ui_print "  "
   fi
   unmount_all
@@ -263,7 +263,7 @@ print_modname() {
   ui_print "$(mod_info author)"
   ui_print "Powered by Magisk (@topjohnwu)"
   ui_print " "
-  [ -f /data/u ] || ui_print "(i) Searching for the latest compatible open-gapps-* zip"
+  [ -f /data/u ] || ui_print "(i) 正在搜索兼容的最新 open-gapps-* zip"
 }
 
 ##########################################################################################
@@ -351,10 +351,10 @@ fi
 
 mount_image $IMG $mountPath
 
-# uninstall
+# 卸载
 if [ -f /data/u ]; then
   ui_print "  "
-  ui_print "(i) Uninstalling"
+  ui_print "(i) 卸载中"
   wipe_modPath u
   unmount_all
   ui_print "  "
@@ -364,7 +364,7 @@ fi
 CurVerInfo=$modPath/system/etc/g.prop
 CurOpenGA_VER=0
 
-# find latest OpenGAPackage
+# 查找最新的OpenGAPackage
 oIFS=$IFS
 IFS=$'\n\t'
 for f in $(find /external_sd /sdcard -type f -iname open_gapps-*.zip 2>/dev/null); do
@@ -392,12 +392,12 @@ wipe_modPath
 
 OpenGAPackage="`unzip -pqo "$GAppsZip" g.prop | sed -n '/ro.addon.open_type/s/.*=//p'`-$CurOpenGA_VER"
 
-# pseudo system packages
+# 伪系统包
 sysApp="$(ls -d /system/app/*)"
 sysPrivApp="$(ls -d /system/priv-app/*)"
 vendorApp="$(ls -d /vendor/bundled-app/* 2>/dev/null)"
 
-# prepare NewSystemPath & NewVendorPath
+# 准备NewSystemPath和NewVendorPath
 cp -af /system/build.prop $INSTALLER/build.prop
 umount -l /system_root 2>/dev/null
 umount -l /system 2>/dev/null
@@ -413,12 +413,12 @@ if [ -d /vendor ]; then
   bind_mount $NewVendorPath /vendor
 fi
 
-# create pseudo-system packages
+# 创建伪系统包
 for d in $sysApp $sysPrivApp $vendorApp; do
   mktouch ${modPath}$d/.replace
 done
 
-# extract OpenGApps install scripts
+# 提取OpenGApps安装脚本
 GAppsTmpDir="$INSTALLER/OpenGApps"
 GAppsInstaller=$GAppsTmpDir/META-INF/com/google/android/update-binary
 mkdir "$GAppsTmpDir" 2>/dev/null
@@ -426,7 +426,7 @@ unzip -o "$GAppsZip" "META-INF/*" -d "$GAppsTmpDir" >&2
 unzip -o "$GAppsZip" installer.sh -d /tmp >&2
 
 
-# patch GApps install scripts
+# patch GApps安装脚本
 sed -i '/SYSTEM=\/system\/system/s/m\/system/m/; \
   /abpartition=true/s/true/false/; \
   /ui_print.*ounting/d; \
@@ -445,22 +445,22 @@ sed -i '/vrmode_compat=false/s/false/true/' /tmp/installer.sh
 sed -i 's/unzip \-o/unzip \-n/' $GAppsInstaller
 
 
-# (re-)Install OpenGApps
+# (再)安装OpenGapps
 cp -af $INSTALLER/build.prop $NewSystemPath
 set_perm $GAppsInstaller 0 0 755
 set_perm /tmp/installer.sh 0 0 755
 sh $GAppsInstaller dummy "$oOutFD" "$GAppsZip"
 
-# disable conflicting and/or unwanted system APKs
+# 禁用冲突和/或不需要的系统APK
 { umount -l /system
 umount -l /vendor; } 2>/dev/null
 mount_partitions
 disable_apks
 
-# update module.prop to reflect OpenGApps version
+# 更新module.prop以反映OpenGApps版本
 sed -i "2s/$/ ($OpenGAPackage)/" $INSTALLER/module.prop
 
-# cleanup
+# 清理
 rm $modPath/system/build.prop
 rm -rf $modPath/system/addon.d
 [ "`ls -A $NewVendorPath`" ] || rm -rf $NewVendorPath
@@ -468,7 +468,7 @@ rm -rf $modPath/system/addon.d
 # auto Mount
 mktouch $modPath/auto_mount
 
-# module info
+# 模块信息
 cp $INSTALLER/module.prop $modPath/
 
 # etc must be ready earlier to prevent runtime permission issues
@@ -477,13 +477,13 @@ cp -af $modPath/system/etc /cache/magisk_mount/system
 mv $INSTALLER/service.sh $modPath/
 set_perm $modPath/service.sh 0 0 755
 
-# gms manager
+# gms 管理器
 mv -f $INSTALLER/MagicGApps.sh $mountPath/.core/service.d/
 set_perm $mountPath/.core/service.d/MagicGApps.sh 0 0 755
 
 unmount_all
 shrink_img
 
-ui_print "- Installation complete"
+ui_print "- 安装完成"
 ui_print " "
 exit 0
