@@ -4,47 +4,40 @@
 
 
 
----
-#### DISCLAIMER
+#### 免责声明
 
-This software is provided as is, in the hope that it will be useful, but without any warranty. Always read/reread this reference prior to installing/upgrading. While no cats have been harmed, I assume no responsibility under anything which might go wrong due to the use/misuse of it.
+- 本软件以 "现状" 来提供，希望它能有用，但不作任何保证。 在安装/更新之前，请务必阅读参考资料。虽然没有猫受到伤害* ，如因使用/滥用而引致任何问题，我概不负责。
+- GNU通用公共许可证第3版或更新的副本将随每个版本一起提供。 请在使用，修改和/或共享此作品的任何部分之前阅读它。
+- 为了防止欺诈，不要镜像任何与项目相关的链接。
 
-A copy of the GNU General Public License, version 3 or newer ships with every build. Please, read it prior to using, modifying and/or sharing any part of this work.
-
-To prevent fraud, DO NOT mirror any link associated with this project.
-
+- \* 原文为 "While no cats have been harmed" 如果你有更好的翻译,请通过issue告诉我
 
 
----
-#### DESCRIPTION
+#### 描述
 
-- This module installs a regular open_gapps-* zip (except aroma variant) systemlessly. When it's disabled, Google Play Services are automatically disabled on the next boot as well. This prevents continuous, disturbing gms crashes.
+- 以systemlessly方式安装常规open_gapps-*.zip (aroma版除外)。
+- 禁用该模块后，Google Play服务也会在下次启动时自动禁用，可防止出现不停的gms崩溃警告
 
 
 
----
-#### PRE-REQUISITES
+#### 必备条件
 
-- Any open_gapps-* zip, except aroma variant
-- Custom recovery
+- 任何open_gapps-*.zip(aroma版除外)
+- 第三方recovery
 - Magisk
 
 
 
----
-#### SETUP STEPS
+#### 设置步骤
 
-0. Make sure an open_gapps-* zip (except aroma variant) exists somewhere in /sdcard or /external_sd directories or subdirectories (max directory depth must be 3 -- i.e., /sdcard/Download/OpenGApps).
-1. Optional -- run `touch /data/r` to 
-reinstall open_gapps-* zip (or `touch 
-/data/u` to uninstall the module).
-2. Optional -- set up a gapps-config.txt file (removal lists work as pseudo-removal lists -- systemless debloat).
-3. Install from custom recovery (i.e., TWRP).
+0. 确保在 /sdcard 或 /external_sd 目录或子目录中的某处存在open_gapps-*.zip (不能是aroma版 最大目录深度必须为3 - 即 /sdcard/Download/OpenGApps )
+1. 可选的 -- 终端中运行 `touch /data/r` 以重装 open_gapps-*.zip (或 `touch /data/u` 以卸载模块).
+2. 可选的 -- 设置一个gapps-config.txt文件 (删除列表作为伪删除列表 - systemless debloat).
+3. 在第三方recovery中安装 (i.e., TWRP).
 
 
 
----
-#### LINKS
+#### 在线支持
 
 - [Facebook Support Page](https://facebook.com/VR25-at-xda-developers-258150974794782)
 - [Git Repository](https://github.com/Magisk-Modules-Repo/MagicGApps)
@@ -53,24 +46,23 @@ reinstall open_gapps-* zip (or `touch
 
 
 
----
-#### LATEST CHANGES
+#### 近期变动
 
 **2018.9.23 (201809230)**
-- Max OpenGApps search directory depth set to 3 for faster speed.
-- Support for latest Magisk versions
-- Updated documentation
-- Use /dev/urandom over /dev/random.
-- Use Magisk imgtool over make_ext4fs and resize2fs.
+- 最大OpenGApps搜索目录深度设置为3以获得更快的速度
+- 支持最新的Magisk版本
+- 更新文档
+- 在 /dev/random 上使用 /dev/urandom
+- 在make_ext4fs和resize2fs上使用Magisk imgtool
 
 **2018.8.12 (201808120)**
-- Added GMS Manager script -- automatically enables/disables Google Play Services when MagicGApps is enabled/disabled; self-remove when MagicGApps is uninstalled
-- Updated module description
+- 添加了GMS Manager脚本 - 在启用/禁用MagicGApps时自动启用/禁用Google Play服务;卸载MagicGApps时自行删除
+- 更新了模块说明
 
 **2018.8.11 (201808110)**
-- Fixed GApps runtime permission issues
-- Fixed "make_ext4fs not found" (devices running Android P)
-- Let Open GApps installer use the real /persist
-- Major optimizations & cosmetic changes
-- Removed `gp` executable
-- Updated documentation
+- 修复了GApps运行时权限问题
+- 修复了“未找到make_ext4fs”（运行Android P的设备）
+- 让Open GApps安装程序使用real / persist
+- 主要优化和外观变化
+- 删除了`gp`可执行文件
+- 更新文档
