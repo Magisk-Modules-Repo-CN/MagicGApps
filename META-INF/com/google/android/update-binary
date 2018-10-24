@@ -39,7 +39,7 @@ is_mounted() { mountpoint -q "$1" 2>/dev/null; }
 mount_check() {
   if is_mounted "$1"; then
     ui_print " "
-    ui_print "(!) Failed to bind-mount $1"
+    ui_print "(!) 无法绑定挂载 $1"
     ui_print " "
     exit 1
   fi
@@ -49,7 +49,7 @@ bind_mount() {
   mount -o bind "$1" "$2"
   if ! is_mounted "$2"; then
     ui_print " "
-    ui_print "(!) Failed to bind-mount $2"
+    ui_print "(!) 无法绑定挂载 $2"
     ui_print " "
     exit 1
   fi
@@ -75,7 +75,7 @@ mount_image() {
   fi
   if ! is_mounted $2; then
     ui_print " "
-    ui_print "(!) Failed to mount $IMG"
+    ui_print "(!) 无法挂载 $IMG"
     ui_print " "
     exit 1
   fi
@@ -232,7 +232,7 @@ mount_partitions() {
     mount -t ext4 -o ro $SYSTEMBLOCK /system
   fi
 
-  is_mounted /system || [ -f /system/build.prop ] || { echo "(!) Failed to mount /system"; exit 1; }
+  is_mounted /system || [ -f /system/build.prop ] || { echo "(!) 无法挂载 /system"; exit 1; }
   cat /proc/mounts | grep -E '/dev/root|/system_root' >/dev/null && SKIP_INITRAMFS=true || SKIP_INITRAMFS=false
   if [ -f /system/init.rc ]; then
     SKIP_INITRAMFS=true
@@ -248,7 +248,7 @@ mount_partitions() {
       VENDORBLOCK=`find /dev/block -iname vendor$SLOT | head -n 1`
       mount -t ext4 -o ro $VENDORBLOCK /vendor
     fi
-    is_mounted /vendor || { echo "(!) Failed to mount /vendor"; exit 1; }
+    is_mounted /vendor || { echo "(!) 无法挂载 /vendor"; exit 1; }
   fi
 }
 
@@ -490,20 +490,20 @@ shrink_img
 ui_print "- 安装完成"
 ui_print " "
 
-whatsNew="- Max OpenGApps search directory depth set to 3 for faster speed.
-- Support for latest Magisk versions
-- Updated documentation
-- Use /dev/urandom over /dev/random.
-- Use Magisk imgtool over make_ext4fs and resize2fs."
+whatsNew="-  最大OpenGApps搜索目录深度设置为3以获得更快的速度
+- 支持最新的Magisk版本
+- 更新文档
+- 在 /dev/random 上使用 /dev/urandom
+- 在make_ext4fs和resize2fs上使用Magisk imgtool"
 
-ui_print "  WHAT'S NEW"
+ui_print "  什么是新的"
 echo "$whatsNew" | \
   while read c; do
     ui_print "    $c"
   done
 
 ui_print " "
-ui_print "  LINKS"
+ui_print "  链接"
 ui_print "    - Facebook Page: facebook.com/VR25-at-xda-developers-258150974794782"
 ui_print "    - Git Repository: github.com/Magisk-Modules-Repo/MagicGApps"
 ui_print "    - XDA Thread: forum.xda-developers.com/apps/magisk/module-systemless-beansgapps-mini-7-1-x-t3611362"
